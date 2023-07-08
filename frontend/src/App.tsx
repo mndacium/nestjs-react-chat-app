@@ -1,9 +1,9 @@
-import "./App.css";
+import "./App.scss";
 import MessageBox from "./components/MessageBox";
 import { useEffect, useState, useContext } from "react";
-import fetchMessages from "./fetch/fetchMessages";
+
 import IMessage from "./models/IMessage";
-import MessageComponent from "./components/Message";
+import MessageComponent from "./components/MessageComponent";
 import { Socket } from "socket.io-client";
 import { SocketContext } from "./context/SocketProvider";
 
@@ -25,7 +25,7 @@ const App: React.FC<IApp> = () => {
       socket.on("getMessages", () => {
         socket.emit("getMessages"); // Request updated messages from the server
       });
-      console.log("socket re triggers")
+      console.log("socket re triggers");
       // Clean up event listeners when the component unmounts or when the socket is updated
       return () => {
         socket.off("messageResponse");
@@ -36,18 +36,23 @@ const App: React.FC<IApp> = () => {
     }
   }, [socket]);
   return (
-    <div>
-      <MessageBox></MessageBox>
+    <div className="container">
       {error && <div>{error.message}</div>}
-      {messages &&
-        messages.map((message) => {
-          return (
-            <MessageComponent
-              email={message.email}
-              text={message.text}
-            ></MessageComponent>
-          );
-        })}
+      <div className="messages-container">
+        {messages &&
+          messages.map((message) => {
+            return (
+              <>
+                <MessageComponent
+                  isUserMessage={message.email === "user"}
+                  email={message.email}
+                  text={message.text}
+                ></MessageComponent>
+              </>
+            );
+          })}
+          <MessageBox></MessageBox>
+      </div>
     </div>
   );
 };
