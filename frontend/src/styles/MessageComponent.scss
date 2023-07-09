@@ -1,0 +1,23 @@
+@use "_variables.scss" as vars;
+@mixin message-style($bg-color, $alignment) {
+  background-color: $bg-color;
+  @if $alignment== "right" {
+    margin-left: auto;
+  }
+}
+
+.message {
+  max-width: 50%;
+  width: fit-content;
+  border-radius: 5px 15px;
+  padding: 10px 25px;
+  margin-bottom: 10px;
+
+  &.user-message {
+    @include message-style(vars.$primary_color, right);
+  }
+
+  &.other-user-message {
+    @include message-style(vars.$secondary_color, left);
+  }
+}

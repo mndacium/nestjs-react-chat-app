@@ -1,4 +1,4 @@
-import "./Message.scss";
+import "../styles/MessageComponent.scss";
 export interface IMessageComponent {
   isUserMessage: boolean;
   email: string;

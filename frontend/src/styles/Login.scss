@@ -1,0 +1,9 @@
+@use "_variables.scss" as vars;
+.login-button{
+    background: vars.$system_text ;
+    color:vars.$primary_text;
+    font-size: inherit;
+    padding: 15px 10px;
+    border: none;
+    border-radius: 5px 10px;
+}

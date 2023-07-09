@@ -1,16 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.scss";
+import "./styles/index.scss";
 import App from "./App";
 import { SocketProvider } from "./context/SocketProvider";
+import { UserProvider } from "./context/UserProvider";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <SocketProvider>
-      <App />
-    </SocketProvider>
+    <BrowserRouter>
+      <SocketProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </SocketProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

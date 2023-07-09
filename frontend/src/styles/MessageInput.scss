@@ -1,0 +1,15 @@
+@use "./variables" as vars;
+
+.message_form{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: auto;
+  right: auto;
+  box-sizing: border-box;
+  background:vars.$bg_color;;
+}
+.message_form-button{
+  background-color: vars.$secondary_color;
+  padding: 15px 20px;
+}

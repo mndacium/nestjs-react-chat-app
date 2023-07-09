@@ -1,0 +1,19 @@
+@use "_variables.scss" as vars;
+
+.messages-container {
+  position: relative;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  min-height: 0;
+  height: 88vh;
+
+  padding-top: 10px;
+
+  /*scrollbar*/
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}

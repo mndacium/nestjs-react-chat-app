@@ -1,0 +1,11 @@
+$header_color: #132742;
+
+header{
+    background: $header_color;
+}
+.header_container{ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
