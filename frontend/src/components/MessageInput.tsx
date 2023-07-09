@@ -3,7 +3,10 @@ import "../styles/MessageInput.scss";
 import IMessage from "../models/IMessage";
 import { SocketContext } from "../context/SocketProvider";
 import { UserContext } from "../context/UserProvider";
-
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
+import CustomTextField from "./CustomTextField";
 export interface IMessageInput {
   // changeMessages:(arg: IMessage[]) => void;
 }
@@ -29,25 +32,28 @@ const MessageInput: React.FC<IMessageInput> = ({}) => {
     });
   }, [user]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     socket?.emit("sendMessage", formData);
   };
   return (
     <form className="message_form" onSubmit={handleSubmit}>
-      <input
-        className="input"
-        type="text"
-        id="text"
-        name="text"
-        placeholder="Enter your message"
-        value={formData.text}
-        onChange={handleChange}
-      />
+      <div className="input_wrapper">
+        <CustomTextField
+          id="standard-basic"
+          label="Enter your message"
+          fullWidth
+          variant="standard"
+        />
+      </div>
 
-      <button className=" message_form-button" type="submit">
-        Submit
-      </button>
+      <Button
+        sx={{ background: "#499ce3" }}
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={handleSubmit}
+      >
+        Send
+      </Button>
     </form>
   );
 };
