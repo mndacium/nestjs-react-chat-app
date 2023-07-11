@@ -43,6 +43,7 @@ const MessageInput: React.FC<IMessageInput> = ({}) => {
           label="Enter your message"
           fullWidth
           variant="standard"
+          onChange={(e)=>setFormData({...formData, text:e.target.value})}
         />
       </div>
 

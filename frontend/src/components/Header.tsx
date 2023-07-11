@@ -3,12 +3,19 @@ import {useContext} from 'react'
 import "../styles/Header.scss";
 import LoginButton from "./LoginButton";
 import { Outlet } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+
 interface IHeader {
  
 }
 
 const Header: React.FC<IHeader> = ({}) => {
-    const {user} = useContext(UserContext);
+    const {user,setUser} = useContext(UserContext);
+    const navigate = useNavigate()
+    const handleLoginClick=()=>{
+      setUser("")
+      navigate('/login')
+    }
   return (
     <>
     <header>
@@ -16,8 +23,8 @@ const Header: React.FC<IHeader> = ({}) => {
         <div className="header_container">
           <div className="logo">NestJs Chat</div>
           <div className="user">
-            {user}
-            <LoginButton></LoginButton>
+            <span style={{fontWeight:"bold",marginRight:"20px"}}>{user}</span>
+            <LoginButton handleClick={handleLoginClick}></LoginButton>
           </div>
         </div>
       </div>

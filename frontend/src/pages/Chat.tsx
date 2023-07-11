@@ -1,29 +1,29 @@
 import MessageInput from "../components/MessageInput";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import IMessage from "../models/IMessage";
 import MessageComponent from "../components/MessageComponent";
 import { SocketContext } from "../context/SocketProvider";
 import { UserContext } from "../context/UserProvider";
-import "../styles/Chat.scss"
+import "../styles/Chat.scss";
 
-export interface IChat {
-    
-  }
-  
-  const Chat: React.FC<IChat> = () => {
-    const [error, setError] = useState<Error | null>(null);
+export interface IChat {}
+
+const Chat: React.FC<IChat> = () => {
+  const [error, setError] = useState<Error | null>(null);
   const [messages, setMessages] = useState<IMessage[] | null>(null);
+  const [latestMessage, setLatestMessage] = useState<IMessage | null>(null);
   const socket = useContext(SocketContext);
-  const user = useContext(UserContext)
-
+  const { user } = useContext(UserContext);
+  const bottomRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     if (socket) {
       // Request messages from the server
       socket.emit("getMessages");
 
       // Handling the response from the server
-      socket.on("messageResponse", (messages) => {
-        setMessages(messages);
+      socket.on("messageResponse", (receivedMessages) => {
+        receivedMessages = receivedMessages.reverse();
+        setMessages(receivedMessages);
       });
 
       socket.on("getMessages", () => {
@@ -42,38 +42,40 @@ export interface IChat {
     }
   }, [socket]);
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   if (!user) {
     return (
       <div className="container">
-      <h1>Login pls</h1>
+        <h1>Login pls</h1>
       </div>
     );
   }
-
+  console.log(user);
   return (
-   <>
-
+    <>
       <main className="main">
-      <div className="container">
-        <div className="messages-container">
-          {messages &&
-            messages.map((message, index) => (
-              <MessageComponent
-                key={index}
-                isUserMessage={message.email === "user"}
-                email={message.email}
-                text={message.text}
-              />
-            ))}
-        </div>
-        <MessageInput />
+        <div className="container">
+          <div className="messages-container">
+            {messages &&
+              messages.map((message, index) => (
+                <MessageComponent
+                  key={index}
+                  isUserMessage={message.email === user}
+                  email={message.email}
+                  text={message.text}
+                />
+              ))}
+              <div ref={bottomRef} />
+          </div>
+          
+          <MessageInput />
         </div>
       </main>
-   </>
-      
+    </>
   );
-  };
-  
-  export default Chat;
-  
+};
+
+export default Chat;

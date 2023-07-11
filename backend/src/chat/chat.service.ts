@@ -13,6 +13,7 @@ export class ChatService {
   }
 
   async getMessages(): Promise<Chat[]> {
-    return await this.prisma.chat.findMany();
+    console.log(await this.prisma.chat.findMany());
+    return await this.prisma.chat.findMany({orderBy:{id:"desc"}});
   }
 }

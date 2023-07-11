@@ -1,38 +1,31 @@
+import { useContext } from "react";
 import "../styles/Login.scss";
 import { UserContext } from "../context/UserProvider";
-import { useContext } from "react";
-import { useNavigate} from "react-router-dom";
+import Button from "@mui/material/Button";
 interface ILoginButton {
-  userName?: string;
+  handleClick: (arg: any) => void;
 }
-const LoginButton: React.FC<ILoginButton> = ({ userName = "" }) => {
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate()
+const LoginButton: React.FC<ILoginButton> = ({ handleClick }) => {
+  const { user } = useContext(UserContext);
   if (user) {
     return (
-     
-        <button className="login-button" onClick={() => {
-          setUser("")
-          navigate('/login')
-          }}>
-          Log Out
-        </button>
+      <Button
+        sx={{ background: "#499ce3" }}
+        variant="contained"
+        onClick={handleClick}
+      >
+        Log Out
+      </Button>
     );
   } else {
     return (
-        <button
-          className="login-button"
-          onClick={() => {
-            if (userName) {
-              setUser(userName);
-              navigate('/')
-            } else {
-              alert("No username provided");
-            }
-          }}
-        >
-          Log In
-        </button>
+      <Button
+        sx={{ background: "#499ce3" }}
+        variant="contained"
+        onClick={handleClick}
+      >
+        Log In
+      </Button>
     );
   }
 };
